@@ -10,7 +10,9 @@ namespace FoodSelectionApi.Test
         const int TEST1 = 100;
         const int TEST2 = 10000;
         private Random rand;
-       string[] ArrStr = { "2", "3", "4" };
+        string[] Categories = { "Завтрак", "Обед", "Ужин" };
+        string[] NameProduct = { "Мясо", "Картофель отварной", "Бургер", "Курица" };
+
         public UnitTest1()
         {
             _client = new HttpClient();
@@ -20,7 +22,7 @@ namespace FoodSelectionApi.Test
         [Fact]
         public async Task Add100Elements()
         {
-            var ClRes = await _client.DeleteAsync("api/FoodProduct/DeleteAll");
+            var ClRes = await _client.DeleteAsync("api/FoodProduct");
             ClRes.EnsureSuccessStatusCode();
 
             int CountSuccess = 0;
@@ -29,12 +31,12 @@ namespace FoodSelectionApi.Test
             {
                 var newElem = new FoodProduct
                 {
-                    Name = "sdasd",
-                    Category = ArrStr[rand.NextInt64(0, 2)],
+                    Name = NameProduct[rand.Next(0,3)],
+                    Category = Categories[rand.NextInt64(0, 2)],
                     Protein = rand.NextInt64(0, 100),
                     Carbs = rand.NextInt64(0, 100),
                     Fats = rand.NextInt64(0, 100),
-                    Calories = 20,
+                    Calories = rand.Next(5,1000),
                     IsVegan = false,
                     IsVegetarian = false
                 };
@@ -46,7 +48,7 @@ namespace FoodSelectionApi.Test
         [Fact]
         public async Task Add10000Elements()
         {
-            var ClRes = await _client.DeleteAsync("api/FoodProduct/DeleteAll");
+            var ClRes = await _client.DeleteAsync("api/FoodProduct");
             ClRes.EnsureSuccessStatusCode();
 
             int CountSuccess = 0;
@@ -55,12 +57,12 @@ namespace FoodSelectionApi.Test
             {
                 var newElem = new FoodProduct
                 {
-                    Name = "sdasd",
-                    Category = ArrStr[rand.Next(0, 2)],
+                    Name = NameProduct[rand.Next(0,3)],
+                    Category = Categories[rand.Next(0, 2)],
                     Protein = rand.NextInt64(0, 100),
                     Carbs = rand.NextInt64(0, 100),
                     Fats = rand.NextInt64(0, 100),
-                    Calories = 20,
+                    Calories = rand.Next(5,1000),
                     IsVegan = false,
                     IsVegetarian = false
                 };
@@ -73,7 +75,7 @@ namespace FoodSelectionApi.Test
         [Fact]
         public async Task DeleteAll()
         {
-            var getResponse = await _client.DeleteAsync("api/FoodProduct/DeleteAll");
+            var getResponse = await _client.DeleteAsync("api/FoodProduct");
             getResponse.EnsureSuccessStatusCode();
         }
     }
